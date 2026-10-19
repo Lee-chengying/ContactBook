@@ -6,6 +6,8 @@
 #include <QTextStream>
 #include <QTableWidgetItem>
 #include <QHeaderView>
+#include <QFileDialog>  // 用來跳出「另存新檔 / 開啟舊檔」視窗
+#include <QMessageBox>  // 用來跳出提示訊息（選用）
 
 QString mFilename = "C:/test/myfile.txt"; // 存檔路徑（請確保 C 槽有 test 資料夾）
 
@@ -93,4 +95,41 @@ void Widget::on_pushButton_2_clicked()
     }
 
     Write(mFilename, saveFile); // 呼叫上方自定義的 Write 函式寫入檔案
+}
+void Widget::on_pushButton_3_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    QStringLiteral("匯入聯絡人"),
+                                                    "",
+                                                    "Text Files (*.txt *.csv)");
+
+    if (fileName.isEmpty()) return;
+
+    QFile file(fileName);
+    // 以「唯讀、文字模式」打開檔案
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+}
+    ui->tableWidget->setRowCount(0);
+
+    QTextStream in(&file);
+    // 一行一行讀取檔案，直到檔案結束
+    while (!in.atEnd()) {
+        QString line = in.readLine().trimmed();
+        if (line.isEmpty()) continue; // 跳過空白行
+
+        // 用逗號「,」把這一行拆成 4 個字串（學號、班級、姓名、電話）
+        QStringList fields = line.split(",");
+
+        // 在表格最下方新增一列
+        int newRow = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(newRow);
+
+        // 把拆出來的每個欄位塞回表格裡
+        for (int col = 0; col < fields.size() && col < 4; col++) {
+            ui->tableWidget->setItem(newRow, col, new QTableWidgetItem(fields[col]));
+        }
+    }
+
+    file.close();
 }

@@ -40,6 +40,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QPushButton *pushButton;
     QPushButton *pushButton_2;
+    QPushButton *pushButton_3;
 
     void setupUi(QWidget *Widget)
     {
@@ -110,6 +111,11 @@ public:
 
         horizontalLayout->addWidget(pushButton_2);
 
+        pushButton_3 = new QPushButton(Widget);
+        pushButton_3->setObjectName("pushButton_3");
+
+        horizontalLayout->addWidget(pushButton_3);
+
 
         verticalLayout->addLayout(horizontalLayout);
 
@@ -128,6 +134,7 @@ public:
         label_4->setText(QCoreApplication::translate("Widget", "\351\233\273\350\251\261:", nullptr));
         pushButton->setText(QCoreApplication::translate("Widget", "\346\226\260\345\242\236", nullptr));
         pushButton_2->setText(QCoreApplication::translate("Widget", "\345\214\257\345\207\272", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("Widget", "\345\214\257\345\205\245", nullptr));
     } // retranslateUi
 
 };
