@@ -62,8 +62,8 @@ void Widget::on_pushButton_clicked()
     QTableWidgetItem *inputRow1, *inputRow2, *inputRow3, *inputRow4;
 
     inputRow1 = new QTableWidgetItem(QString(ui->lineEdit->text()));
-    inputRow2 = new QTableWidgetItem(QString(ui->lineEdit_2->text()));
-    inputRow3 = new QTableWidgetItem(QString(ui->lineEdit_3->text()));
+    inputRow2 = new QTableWidgetItem(QString(ui->lineEdit_3->text()));
+    inputRow3 = new QTableWidgetItem(QString(ui->lineEdit_2->text()));
     inputRow4 = new QTableWidgetItem(QString(ui->lineEdit_4->text()));
 
     ui->tableWidget->insertRow(ui->tableWidget->rowCount());
@@ -98,10 +98,10 @@ void Widget::on_pushButton_2_clicked()
 }
 void Widget::on_pushButton_3_clicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-                                                    QStringLiteral("匯入聯絡人"),
-                                                    "",
-                                                    "Text Files (*.txt *.csv)");
+    QString fileName = QFileDialog::getSaveFileName(this,
+                                                    QStringLiteral("匯出聯絡人"),
+                                                    "contacts.csv",
+                                                    "CSV Files (*.csv);;Text Files (*.txt)");
 
     if (fileName.isEmpty()) return;
 
